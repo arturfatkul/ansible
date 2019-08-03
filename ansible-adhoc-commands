@@ -1,0 +1,38 @@
+ssh-keygen -t rsa #to generate pub/priv keys in ansible machine
+ssh-copy-id ip_address #copy pub key to remote server
+
+
+#AD HOC COMMNANDS
+#"ping" remote server
+
+ansible webservers -i hosts -u root -m ping
+ 
+#shows information about a remote server
+
+ansible 192.168.174.157 -i hosts -u root -m setup
+
+#install httpd service
+
+ansible 192.168.174.157 -i hosts -u user -m yum -a "name=httpd state=latest" -b
+
+#start httpd service
+
+ansible 192.168.174.157 -i hosts -u root  -m service -a "name=httpd state=started" -b
+
+#run command on remote hosts
+
+ansible webserver -i hosts -u root -m command -a "uptime"
+
+#check localhost
+
+ansible localhost -m ping
+ansible localhost -m setup
+ansible localhost -m command -a "uptime"
+
+#ansible help command, list of all modules
+
+ansible-doc -h
+ansible-doc -l
+ansible-doc -l | grep aws
+
+ansible-doc aws_s3 #help on specific modules with a list of available parameters
