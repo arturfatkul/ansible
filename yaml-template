@@ -1,0 +1,59 @@
+# YAML Ain't Markup Language
+
+#Object 'person' with properties like string,interger,float,long int,boolean,date
+
+person:
+   name: "artmind"  
+   occupation: 'network engineer' 
+   age: 35 
+   gpa: 3.5
+   fav_num: 1e+10 
+   male: true 
+   birthday: 1985-02-20 20:30:00 
+   flaws: null 
+
+#Representation of the list in YAML
+   hobbies:
+    - sports
+    - movies
+    - riding bike
+
+#Another version of list
+   sports: ["soccer", "nba", "nhl"]
+
+#List of object
+   friends:
+      - name: "Art"
+        age: 35
+      - {name: "Art", age: 22}
+
+#With > , YAML format it a as single string
+
+description: >
+       YAML is a human-readable data serialization language. 
+       It is commonly used for configuration files, but could 
+       be used in many applications where data is being stored 
+       or transmitted. 
+    
+#With pipe |, YAML can preserve the formating
+
+signature: |
+   Art
+   Network Engineer
+   email - myemail@gmail.com
+
+#Anchoring in YAML
+
+name: &name "Art"
+id: *name #anchoring the value of key name
+
+
+base: &base
+  var1: value1
+foo: 
+  <<: *base  #anchoring the object with key,value pair - var1: value1
+
+#YAML can convert data types
+
+age: !!float 35
+age: !!str 35 
