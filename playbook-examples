@@ -1,3 +1,7 @@
+#command to start playbook
+
+ansible-playbook -i hosts playbook.yml
+
 #Install several packages or iterate through the list of items
 
 tasks:
