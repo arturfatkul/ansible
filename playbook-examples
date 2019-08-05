@@ -1,0 +1,10 @@
+#Install several services or loop through the item
+
+tasks:
+- name: install services
+  yum: name={{item}} state=installed
+  with_items:
+  - httpd
+  - python
+  - mysql
+  
