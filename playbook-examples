@@ -1,4 +1,4 @@
-#Install several services or loop through the item
+#Install several packages or iterate through the list of items
 
 tasks:
 - name: install services
