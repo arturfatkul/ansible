@@ -51,7 +51,7 @@ vars:
        - name: start httpd service
          service: name=httpd state=started enabled=yes
          
-      when: ansible_os_family="RedHat"
-      become: yes
+        when: ansible_os_family="RedHat"
+        become: yes
       
   
