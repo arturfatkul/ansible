@@ -57,3 +57,10 @@ foo:
 
 age: !!float 35
 age: !!str 35 
+
+#Variables
+
+path: "/var/log"
+
+- name: create log file
+  file: path={{log_path}}/service.log state=touch owner=user group=user mode=0755
