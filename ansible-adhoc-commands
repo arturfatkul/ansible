@@ -36,3 +36,8 @@ ansible-doc -l
 ansible-doc -l | grep aws
 
 ansible-doc aws_s3 #help on specific modules with a list of available parameters
+
+#To create the roles 
+
+ansibla-galaxy init httpd
+
