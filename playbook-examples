@@ -41,7 +41,7 @@ vars:
    
   -debug: var=shell_echo
   
-  ```#Do tasks in Block if certain conditions are true```
+ #Do tasks in Block if certain conditions are true
   
   tasks:
      - block:
