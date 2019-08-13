@@ -1,0 +1,168 @@
+---
+##################################
+- name: P1-Router 
+  hosts: [p1router]
+  gather_facts: False 
+  connection: local 
+ 
+  vars:
+      ansible_user: virtlab
+      ansible_password: password
+      timeout: 30
+  
+  tasks:
+   - name: Configuring P1-Router
+     ios_config:
+      backup: no
+      src: template/p1router.j2
+#################################
+- name: P2-Router
+  hosts: [p2router]
+  gather_facts: False 
+  connection: local 
+ 
+  vars:
+      ansible_user: virtlab
+      ansible_password: password
+      timeout: 30
+  
+  tasks:
+   - name: Configuring P2-Router
+     ios_config:
+      backup: no
+      src: template/p2router.j2
+###############################
+- name: P3-Router
+  hosts: [p3router]
+  gather_facts: False 
+  connection: local 
+ 
+  vars:
+      ansible_user: virtlab
+      ansible_password: password
+      timeout: 30
+  
+  tasks:
+   - name: Configuring P3-Router
+     ios_config:
+      backup: no
+      src: template/p3router.j2
+###############################
+- name: PE1-Router
+  hosts: [pe1router]
+  gather_facts: False 
+  connection: local 
+ 
+  vars:
+      ansible_user: virtlab
+      ansible_password: password
+      timeout: 30
+  
+  tasks:
+   - name: Configuring PE1-Router
+     ios_config:
+      backup: no
+      src: template/pe1router.j2
+################################
+- name: PE2-Router
+  hosts: [pe2router]
+  gather_facts: False 
+  connection: local 
+ 
+  vars:
+      ansible_user: virtlab
+      ansible_password: password
+      timeout: 30
+  
+  tasks:
+   - name: Configuring PE2-Router
+     ios_config:
+      backup: no
+      src: template/pe2router.j2
+################################
+- name: CE1-Router
+  hosts: [ce1router]
+  gather_facts: False 
+  connection: local 
+ 
+  vars:
+      ansible_user: virtlab
+      ansible_password: password
+      timeout: 30
+  
+  tasks:
+   - name: Configuring CE1-Router
+     ios_config:
+      backup: no
+      src: template/ce1router.j2
+################################
+- name: CE2-Router
+  hosts: [ce2router]
+  gather_facts: False 
+  connection: local 
+ 
+  vars:
+      ansible_user: virtlab
+      ansible_password: password
+      timeout: 30
+  
+  tasks:
+   - name: Configuring CE2-Router
+     ios_config:
+      backup: no
+      src: template/ce2router.j2
+################################
+- name: Switch1
+  hosts: [switch1]
+  gather_facts: False 
+  connection: local 
+ 
+  vars:
+      ansible_user: virtlab
+      ansible_password: password
+      timeout: 30
+  
+  tasks:
+   - name: Configuring Switch1
+     ios_config:
+      backup: no
+      src: template/switch1.j2
+##############################
+- name: Switch2
+  hosts: [switch2]
+  gather_facts: False 
+  connection: local 
+ 
+  vars:
+      ansible_user: virtlab
+      ansible_password: password
+      timeout: 30
+  
+  tasks:
+   - name: Configuring Switch2
+     ios_config:
+      backup: no
+      src: template/switch2.j2
+##############################
+- name: Install and Configure httpd
+  hosts: webserver
+  gather_facts: False
+  become: yes
+
+  tasks:
+  - name: Open http port on Firewalld
+    firewalld: service=http permanent=no state=enabled
+
+  - name: Install httpd
+    yum: name=httpd state=latest
+
+  - name: Copy index.html to the Web Server
+    copy: src=template/index.html dest=/var/www/html
+    notify: restart httpd
+
+  - name: Start httpd service
+    service: name=httpd state=started enabled=yes
+
+  handlers:
+  - name: restart httpd
+    service: name=httpd state=restarted
