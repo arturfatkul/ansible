@@ -1,0 +1,29 @@
+hostname Switch2
+ip dhcp excluded-address 192.168.200.1
+!         
+ip dhcp pool WEB
+ network 192.168.200.0 255.255.255.0
+!
+interface Ethernet0/0
+ description WEB-SERVER
+ switchport access vlan 200
+ switchport mode access
+ duplex auto
+!         
+interface Ethernet0/1
+ description CE2
+ no switchport
+ ip address 172.168.12.2 255.255.255.252
+!                
+vlan 200
+name WEB-SERVER
+!
+interface Vlan200
+ description WEB-SERVER
+ ip address 192.168.200.1 255.255.255.0        
+ no sh
+!         
+router eigrp 100
+ network 0.0.0.0
+ passive-interface Ethernet0/2
+!         

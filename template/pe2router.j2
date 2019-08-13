@@ -1,0 +1,41 @@
+hostname PE2-Router
+!
+ip vrf WEB-SERVER
+ rd 64002:1
+ route-target export 64002:1
+ route-target import 64001:1
+!         
+interface Loopback0
+ ip address 200.200.200.200 255.255.255.255
+ ip ospf 1 area 0
+!         
+interface Ethernet0/0
+ description CE2
+ ip vrf forwarding WEB-SERVER
+ ip address 2.2.2.1 255.255.255.252
+!         
+interface Ethernet0/1
+ description P3
+ ip address 10.200.200.1 255.255.255.252
+ ip ospf network point-to-point
+ ip ospf 1 area 0
+ mpls ip  
+!          
+router ospf 1
+ router-id 102.102.102.102
+!         
+router bgp 65100
+ bgp log-neighbor-changes
+ neighbor 100.100.100.100 remote-as 65100
+ neighbor 100.100.100.100 update-source Loopback0
+ !        
+ address-family vpnv4
+  neighbor 100.100.100.100 activate
+  neighbor 100.100.100.100 send-community extended
+ exit-address-family
+ !        
+ address-family ipv4 vrf WEB-SERVER
+  neighbor 2.2.2.2 remote-as 64002
+  neighbor 2.2.2.2 activate
+ exit-address-family
+!      

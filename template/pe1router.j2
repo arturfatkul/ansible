@@ -1,0 +1,41 @@
+hostname PE1-Router
+!
+ip vrf PC 
+ rd 64001:1
+ route-target export 64001:1
+ route-target import 64002:1
+!         
+interface Loopback0
+ ip address 100.100.100.100 255.255.255.255
+ ip ospf 1 area 0
+!         
+interface Ethernet0/0
+ description P1
+ ip address 10.100.100.1 255.255.255.252
+ ip ospf network point-to-point
+ ip ospf 1 area 0
+ mpls ip  
+!         
+interface Ethernet0/1
+ description CE1
+ ip vrf forwarding PC
+ ip address 1.1.1.1 255.255.255.252
+!         
+router ospf 1
+ router-id 101.101.101.101
+!         
+router bgp 65100
+ bgp log-neighbor-changes
+ neighbor 200.200.200.200 remote-as 65100
+ neighbor 200.200.200.200 update-source Loopback0
+ !        
+ address-family vpnv4
+  neighbor 200.200.200.200 activate
+  neighbor 200.200.200.200 send-community extended
+ exit-address-family
+ !        
+ address-family ipv4 vrf PC
+  neighbor 1.1.1.2 remote-as 64001
+  neighbor 1.1.1.2 activate
+ exit-address-family
+!         

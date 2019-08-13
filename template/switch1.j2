@@ -1,0 +1,36 @@
+hostname Switch1
+ip dhcp excluded-address 192.168.100.1
+!         
+ip dhcp pool PC
+ network 192.168.100.0 255.255.255.0
+ default-router 192.168.100.1 
+
+interface Ethernet0/0
+ description CE1
+ no switchport
+ ip address 172.168.11.2 255.255.255.252
+
+interface Ethernet0/1
+ description MNGMNT
+ no switchport
+ ip address dhcp
+ no cdp enable
+
+interface Ethernet0/2
+ description PC
+ switchport access vlan 100
+ switchport mode access
+ duplex auto
+!
+vlan 100
+name PC
+!
+interface Vlan100
+ description PC
+ ip address 192.168.100.1 255.255.255.0
+ no sh
+
+router eigrp 100
+ network 0.0.0.0
+ passive-interface Ethernet0/1
+!

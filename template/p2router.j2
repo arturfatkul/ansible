@@ -1,0 +1,25 @@
+hostname P2-Router
+!
+interface Loopback0
+ ip address 12.12.12.12 255.255.255.255
+ ip ospf 1 area 0
+!   
+mpls ldp router-id Loopback0
+mpls label range 200 299
+!  
+interface Ethernet0/0
+ description PE3
+ ip address 10.255.255.5 255.255.255.252
+ ip ospf network point-to-point
+ ip ospf 1 area 0
+!         
+interface Ethernet0/1
+ description PE1
+ ip address 10.255.255.2 255.255.255.252
+ ip ospf network point-to-point
+ ip ospf 1 area 0
+!         
+router ospf 1
+ mpls ldp autoconfig
+ router-id 12.12.12.12
+!         

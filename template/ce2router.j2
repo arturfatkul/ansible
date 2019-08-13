@@ -1,0 +1,28 @@
+hostname CE2-Router
+!
+ip prefix-list ROUTE200 seq 5 permit 192.168.100.0/24
+ip prefix-list ROUTE200 seq 10 deny 0.0.0.0/0 le 32
+!         
+route-map ROUTE-LEAK permit 10
+ match ip address prefix-list ROUTE200
+!         
+route-map ROUTE-LEAK deny 20
+!
+interface Ethernet0/0
+ description PE2
+ ip address 2.2.2.2 255.255.255.252
+!         
+interface Ethernet0/1
+ description SW
+ ip address 172.168.12.1 255.255.255.252
+!         
+router eigrp 100
+ network 0.0.0.0
+ redistribute bgp 64002 metric 100 1 255 1 1500 route-map ROUTE-LEAK
+ passive-interface Ethernet0/2
+!         
+router bgp 64002
+ bgp log-neighbor-changes
+ network 192.168.200.0
+ neighbor 2.2.2.1 remote-as 65100
+!         
