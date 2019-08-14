@@ -1,4 +1,4 @@
-######  <h2> Virtual lab - Ansible automation for PC connection to Web Server through MPLS L3VPN
+######  <h2> Ansible automation for PC connection to Web Server through MPLS L3VPN
  
 I built this lab just for learning and fun.
 <h3><a href="https://arturfatkul.github.io/ansible/">video demonstration</a></h3>
